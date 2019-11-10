@@ -1,0 +1,31 @@
+<%= link_to 'Home', root_path %>
+<div>
+  <h1><%= @recipe.name %></h1>
+  <p><%= @recipe.description %></p>
+  <ul>
+    <% @recipe.tags.each do |tag| %>
+      <li><%= tag.title %></li>
+    <% end %>
+  </ul>
+</div>
+
+
+<%= link_to 'Add New Recipe', new_recipe_path %>
+<% @recipes.each do |recipe| %>
+  <div class="recipe">
+    <ul>
+      <% if recipe.recipe_image.attached? %>
+        <%= link_to recipe_path(recipe.id) do %>
+          <% if recipe.recipe_image.variable? %>
+            <li><%= image_tag recipe.recipe_image.variant(resize: '400x400') %></li>
+          <% elsif recipe.recipe_image.previewable? %>
+            <li><%= image_tag recipe.recipe_image.preview(resize: '400x400') %></li>
+          <% end %>
+        <% end %>
+      <% end %>
+      <li>name: <%= recipe.name %></li>
+      <li>description: <%= recipe.description %></li>
+      <li>written by: <%= link_to recipe.user.full_name, recipes_path(user_id: recipe.user.id) %></li>
+    </ul>
+  </div>
+<% end %>
