@@ -1,0 +1,9 @@
+<% if recipe.recipe_image.attached? %>
+  <%= link_to recipe_path(recipe.id) do %>
+    <% if recipe.recipe_image.variable? %>
+      <%= image_tag recipe.recipe_image.variant(resize: '400x400') %>
+    <% elsif recipe.recipe_image.previewable? %>
+      <%= image_tag recipe.recipe_image.preview(resize: '400x400') %>
+    <% end %>
+  <% end %>
+<% end %>

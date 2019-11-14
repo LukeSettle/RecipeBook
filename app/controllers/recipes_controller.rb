@@ -7,10 +7,12 @@ class RecipesController < ApplicationController
 
   def index
     if params[:user_id]
-      @recipes = Recipe.where(user_id: params[:user_id])
+      @user = User.find_by(id: params[:user_id])
+      @recipes = @user.saved_and_stored_recipes
     else
       @recipes = Recipe.all
     end
+    @recipes = @recipes.page(params[:page]).per(3)
   end
 
   def new

@@ -19,6 +19,8 @@ gem 'aws-sdk-s3', require: false
 gem 'rtesseract'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+gem 'font-awesome-sass', '~> 5.11.2'
+gem 'kaminari'
 
 group :development, :test do
   gem 'pry'

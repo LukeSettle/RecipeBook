@@ -1,233 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Every Cook and Cranny</title>
-
-  <!-- Bootstrap core CSS -->
-  <!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
-
-  <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-  <!-- Custom styles for this template -->
-  <!-- <link href="css/landing-page.min.css" rel="stylesheet"> -->
-
-</head>
-
-<body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Every Cook and Cranny</a>
-      <% if user_signed_in? %>
-        <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-      <% else %>
-        <%= link_to('Login', new_user_session_path) %>
-      <% end %>
-    </div>
-  </nav>
-
-  <!-- Masthead -->
-  <header class="masthead text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Save and share all of your recipes in one easy location!</h1>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <% if user_signed_in? %>
-            <form>
-              <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
-                  <input type="text" class="form-control form-control-lg" placeholder="Enter the name of your recipe">
-                </div>
-                <div class="col-12 col-md-3">
-                  <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-                </div>
+<!-- Masthead -->
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">Save and share all of your recipes in one easy location!</h1>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <% if user_signed_in? %>
+          <%= form_with(url: new_recipe_url, method: :get, local: true) do %>
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <%= text_field_tag :name, '', class: 'form-control form-control-lg', placeholder: 'Enter the name of your recipe...' %>
               </div>
-            </form>
-          <% else %>
-            <%= form_with(url: '/users/sign_up', method: :get, local: true) do %>
-              <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
-                  <%= text_field_tag :email, '', class: 'form-control form-control-lg', placeholder: 'Enter your email to add your own recipes...' %>
-                </div>
-                <div class="col-12 col-md-3">
-                  <%= submit_tag 'Sign up!', class: 'btn btn-block btn-lg btn-primary' %>
-                </div>
+              <div class="col-12 col-md-3">
+                <%= submit_tag 'Add Recipe!', class: 'btn btn-block btn-lg btn-primary' %>
               </div>
-            <% end %>
+            </div>
           <% end %>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Icons Grid -->
-  <section class="features-icons bg-light text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-screen-desktop m-auto text-primary"></i>
+        <% else %>
+          <%= form_with(url: '/users/sign_up', method: :get, local: true) do %>
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <%= text_field_tag :email, '', class: 'form-control form-control-lg', placeholder: 'Enter your email to add your own recipes...' %>
+              </div>
+              <div class="col-12 col-md-3">
+                <%= submit_tag 'Sign up!', class: 'btn btn-block btn-lg btn-primary' %>
+              </div>
             </div>
-            <h3>Share</h3>
-            <p class="lead mb-0">Upload your recipes and share with friends</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-layers m-auto text-primary"></i>
-            </div>
-            <h3>Save</h3>
-            <p class="lead mb-0">Store and order your recipes for easy lookup</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-check m-auto text-primary"></i>
-            </div>
-            <h3>Easy to Use</h3>
-            <p class="lead mb-0">Easily search by category and keywords</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image Showcases -->
-  <section class="showcase">
-    <div class="container-fluid p-0">
-      <% @new_recipes.each_with_index do |recipe, index| %>
-        <div class="row no-gutters">
-          <%= image_tag recipe.recipe_image, class: "col-lg-6 text-white showcase-img #{ 'order-lg-2' if index == 1 }" %>
-          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2><%= recipe.name %></h2>
-            <p class="lead mb-0"><%= recipe.description %></p>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section>
-    <div class="container my-5">
-      <div class="card-columns">
-        <% @recipes.each do |recipe| %>
-          <div class="card p-3">
-            <% if recipe.recipe_image.attached? %>
-              <%= link_to recipe_path(recipe.id) do %>
-                <% if recipe.recipe_image.variable? %>
-                  <%= image_tag recipe.recipe_image.variant(resize: '400x400'), class: 'card-img-top' %>
-                <% elsif recipe.recipe_image.previewable? %>
-                  <%= image_tag recipe.recipe_image.preview(resize: '400x400'), class: 'card-img-top' %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <blockquote class="blockquote mb-0 card-body">
-              <p><%= recipe.description %></p>
-              <footer class="blockquote-footer">
-                <small class="text-muted">
-                  <%= recipe.user.full_name %>
-                </small>
-              </footer>
-            </blockquote>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- Call to Action -->
-  <section class="call-to-action text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started? Sign up now!</h2>
+<!-- Icons Grid -->
+<section class="features-icons bg-light text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="icon-screen-desktop m-auto text-primary"></i>
+          </div>
+          <h3>Share</h3>
+          <p class="lead mb-0">Upload your recipes and share with friends</p>
         </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-              </div>
-            </div>
-          </form>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="icon-layers m-auto text-primary"></i>
+          </div>
+          <h3>Save</h3>
+          <p class="lead mb-0">Store and order your recipes for easy lookup</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+          <div class="features-icons-icon d-flex">
+            <i class="icon-check m-auto text-primary"></i>
+          </div>
+          <h3>Easy to Use</h3>
+          <p class="lead mb-0">Easily search by category and keywords</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item">
-              <a href="#">About</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Every Cook and Cranny 2019. All Rights Reserved.</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-facebook fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fab fa-instagram fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
+<!-- Image Showcases -->
+<section class="showcase">
+  <div class="container-fluid p-0">
+    <% @new_recipes.each_with_index do |recipe, index| %>
+      <div class="row no-gutters">
+        <%= image_tag recipe.recipe_image, class: "col-lg-6 text-white showcase-img #{ 'order-lg-2' if index == 1 }" %>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2><%= recipe.name %></h2>
+          <p class="lead mb-0"><%= recipe.description %></p>
         </div>
       </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container my-5">
+    <div class="card-columns">
+      <% @recipes.each do |recipe| %>
+        <div class="card p-3">
+          <% if recipe.recipe_image.attached? %>
+            <%= link_to recipe_path(recipe.id) do %>
+              <% if recipe.recipe_image.variable? %>
+                <%= image_tag recipe.recipe_image.variant(resize: '400x400'), class: 'card-img-top' %>
+              <% elsif recipe.recipe_image.previewable? %>
+                <%= image_tag recipe.recipe_image.preview(resize: '400x400'), class: 'card-img-top' %>
+              <% end %>
+            <% end %>
+          <% end %>
+          <blockquote class="blockquote mb-0 card-body">
+            <p><%= recipe.description %></p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                <%= recipe.user.full_name %>
+              </small>
+            </footer>
+          </blockquote>
+        </div>
+      <% end %>
     </div>
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>
+  </div>
+</section>

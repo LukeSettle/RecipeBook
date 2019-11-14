@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def saved_and_stored_recipes
+    recipes
+  end
 end
