@@ -18,6 +18,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'aws-sdk-s3', require: false
 gem 'rtesseract'
 gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap_form', '~> 4.0'
 gem 'jquery-rails'
 gem 'font-awesome-sass', '~> 5.11.2'
 gem 'kaminari'

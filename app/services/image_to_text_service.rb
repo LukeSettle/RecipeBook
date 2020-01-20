@@ -5,9 +5,10 @@ class ImageToTextService
     @image = image
   end
 
-  def text_for_image
-    path = rails_blob_path(@image, disposition: "attachment", only_path: true)
-    image = RTesseract.new(Rails.root.join('recipe_cards', 'typed-cards.jpg'))
+  def text_from_image
+    active_storage_disk_service = ActiveStorage::Service::DiskService.new(root: Rails.root.to_s + '/storage/')
+    path = active_storage_disk_service.send(:path_for, @image.blob.key)
+    image = RTesseract.new(path)
     image.to_s
   end
 end
