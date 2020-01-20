@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
         <% if user_signed_in? %>
-          <%= form_with(url: new_recipe_url, method: :get, local: true) do %>
+          <%= form_with(url: new_recipe_url, method: :get, local: true, class: 'home-form') do %>
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
                 <%= text_field_tag :name, '', class: 'form-control form-control-lg', placeholder: 'Enter the name of your recipe...' %>
@@ -19,7 +19,7 @@
             </div>
           <% end %>
         <% else %>
-          <%= form_with(url: '/users/sign_up', method: :get, local: true) do %>
+          <%= form_with(url: '/users/sign_up', method: :get, local: true, class: 'home-form') do %>
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
                 <%= text_field_tag :email, '', class: 'form-control form-control-lg', placeholder: 'Enter your email to add your own recipes...' %>

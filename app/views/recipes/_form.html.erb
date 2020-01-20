@@ -1,7 +1,7 @@
 <%= bootstrap_form_with model: @recipe, class: 'base-form' do |f| %>
-  <%= f.text_field :name, placeholder: "Name" %>
+  <%= f.text_field :name, placeholder: "Recipe Name" %>
   <%= f.text_area :description, placeholder: 'Description' %>
-  <%= f.select :tag_ids, @tags, { include_blank: true }, { multiple: true } %>
+  <%= f.select :tag_ids, @tags, { include_blank: false, label: 'Tags' }, { multiple: true } %>
   <%= f.file_field :recipe_image %>
   <%= f.submit "Add Recipe" %>
 <% end %>
