@@ -11,7 +11,7 @@ class RecipesController < ApplicationController
       @recipes = @user.saved_and_stored_recipes
     else
       if params[:image_text]
-        @recipes = Recipe.where('image_text LIKE ?', "%#{params[:image_text]}%")
+        @recipes = Recipe.where('lower(image_text) LIKE ?', "%#{params[:image_text].try(:downcase)}%")
       else
         @recipes = Recipe.all
       end
