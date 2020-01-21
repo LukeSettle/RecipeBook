@@ -1,6 +1,8 @@
-<%= bootstrap_form_with model: @recipe, class: 'base-form' do |f| %>
-  <%= f.text_field :name, placeholder: "Recipe Name" %>
-  <%= f.text_area :description, placeholder: 'Description' %>
-  <%= f.file_field :recipe_image %>
-  <%= f.submit "Add Recipe" %>
-<% end %>
+<div class="container my-5">
+  <%= bootstrap_form_with model: @recipe, class: 'base-form' do |f| %>
+    <%= f.text_field :name, placeholder: "Recipe Name", value: params[:name] %>
+    <%= f.text_area :description, placeholder: 'Description' %>
+    <%= f.file_field :recipe_image %>
+    <%= f.submit "Add Recipe" %>
+  <% end %>
+</div>

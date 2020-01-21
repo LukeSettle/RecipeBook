@@ -10,7 +10,11 @@ class RecipesController < ApplicationController
       @user = User.find_by(id: params[:user_id])
       @recipes = @user.saved_and_stored_recipes
     else
-      @recipes = Recipe.all
+      if params[:image_text]
+        @recipes = Recipe.where('image_text LIKE ?', "%#{params[:image_text]}%")
+      else
+        @recipes = Recipe.all
+      end
     end
     @recipes = @recipes.page(params[:page]).per(3)
   end
