@@ -12,7 +12,7 @@ class ImageToTextService
     IO.copy_stream(download, local_path)
     tesseract = RTesseract.new(local_path)
     image_text = tesseract.to_s
-    delete(local_path)
+    File.delete(local_path)
     image_text
   end
 end
