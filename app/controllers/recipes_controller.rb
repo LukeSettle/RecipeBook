@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
 
-    @recipe.image_text = ImageToTextService.new(@recipe.recipe_image).text_from_image
+    # @recipe.image_text = ImageToTextService.new(@recipe.recipe_image).text_from_image
 
     @recipe.save
     redirect_to @recipe
