@@ -6,7 +6,7 @@ class ImageToTextService
   end
 
   def text_from_image
-    path = ActiveStorage::Blob.service.send(:url, @image.key)
+    path = rails_blob_path(@image)
     image = RTesseract.new(path)
     image.to_s
   end
